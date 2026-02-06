@@ -1,0 +1,58 @@
+import Seat from "./Seat";
+import "../seats.css";
+
+const SeatContainer = () => {
+  const seats = [
+    { id: 1, status: "available" },
+    { id: 2, status: "available" },
+    { id: 3, status: "available" },
+    { id: 4, status: "blocked" },
+    { id: 5, status: "available" },
+    { id: 6, status: "available" },
+    { id: 7, status: "blocked" },
+    { id: 8, status: "blocked" },
+    { id: 9, status: "available" },
+    { id: 10, status: "available" },
+  ];
+
+  return (
+    <div className="container">
+      <div className="seats">
+        {seats.map((seat) => (
+          <Seat key={seat.id} data={seat} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default SeatContainer;       
+
+
+import React, { useState } from "react";
+
+const Seat = ({ data }) => {
+  const [seat, setSeat] = useState({
+    id: data.id,
+    status: data.status,
+  });
+
+  function changeStatus() {
+    setSeat((prevState) => ({
+      ...prevState,
+      status: prevState.status === "available" ? "blocked" : "available",
+    }));
+  }
+
+  return (
+    <button
+      type="button"
+      className={`seat status ${seat.status}`}
+      onClick={changeStatus}
+    >
+      <span>{seat.id}</span>
+    </button>
+  );
+};
+
+export default Seat;
